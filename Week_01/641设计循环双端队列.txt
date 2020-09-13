@@ -1,0 +1,99 @@
+﻿class MyCircularDeque {
+    //队列里的已存元素多少
+    private  int size;
+    //头部的元素
+    private  int  front;
+     //尾部的元素
+    private  int  rear;
+    //队列可以存放元素的大小
+    private  int  capacity;
+    //存放所有元素的数组
+    private  int[] array;
+
+    /** Initialize your data structure here. Set the size of the deque to be k. */
+    public MyCircularDeque(int k) {
+        array= new int[k];
+        front=0;
+        rear=0;
+        capacity=k;
+        size=0;
+    }
+    
+    /** Adds an item at the front of Deque. Return true if the operation is successful. */
+    public boolean insertFront(int value) {
+         //如果队列时满的就无法插入
+        if(size >= capacity) return false;
+        //如果队列没有满，且已有元素非空
+        if(size != 0)  front = (front -1 + capacity) % capacity;
+        array[front]=value;
+        size++;
+        return true;
+    }
+    
+    /** Adds an item at the rear of Deque. Return true if the operation is successful. */
+    public boolean insertLast(int value) {
+          //如果队列时满的就无法插入
+        if(size >= capacity) return false;
+        //如果队列没有满，且已有元素非空
+        if(size != 0)  rear = (rear + 1 + capacity ) % capacity;
+        array[rear]=value;
+        size++;
+        return true;       
+    }
+    
+    /** Deletes an item from the front of Deque. Return true if the operation is successful. */
+    public boolean deleteFront() {
+        if(size == 0 ) return false;
+        if(size == 1 ) {
+            front=0;
+            rear=0;
+        }
+        if(size > 1 ) {
+             front = (front + 1 + capacity ) % capacity;
+        }
+        size--;
+        return true;
+        }
+    
+    /** Deletes an item from the rear of Deque. Return true if the operation is successful. */
+    public boolean deleteLast() {
+        if(size == 0 ) return false;
+        if(size == 1 ) {
+            front=0;
+            rear=0;
+        }
+        if(size > 1 ) {
+             rear = (rear - 1 + capacity ) % capacity;
+        }
+        size--;
+        return true;
+    }
+    
+    /** Get the front item from the deque. */
+    public int getFront() {
+        if(size == 0 ) return -1;
+        return array[front];
+
+    }
+    
+    /** Get the last item from the deque. */
+    public int getRear() {
+        if(size == 0 ) return -1;
+        return array[rear];
+    }
+    
+    /** Checks whether the circular deque is empty or not. */
+    public boolean isEmpty() {
+        if(size == 0 ) return true;
+        return false;
+    }
+    
+    /** Checks whether the circular deque is full or not. */
+    public boolean isFull() {
+        if(size == capacity ) return true;
+        return false;
+
+    }
+}
+
+题目的难点是对队列的理解。
