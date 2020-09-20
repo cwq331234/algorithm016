@@ -1,0 +1,39 @@
+﻿class Solution {
+    // 创建一个队列用于存放最大数的值，最大数永远在first
+    public int[] maxSlidingWindow(int[] nums, int k) {
+    ArrayDeque<Integer> dq=new ArrayDeque<Integer>();
+        //如果数组是空的，直接返空
+        if(nums.length == 0) return nums;
+        //如果K的值==1，直接返整个数组回去
+        if(k==1) return nums;
+        int len = nums.length;
+        //创建一个返回的数组
+        int[] numk=new int[len-k+1];
+        int index=0;
+        //循环这个数组，把值放入队列中取最大值。
+        for(int i=0; i<len ;i++ ){
+            //如果队列不等于空，且原先最大的数等于刚刚出范围的值，就把最大值删掉
+            if (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+            //如果 拿队列里的值和i的值进行比较小的删掉大的留着
+            while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) {
+                dq.pollLast();  
+            }
+             if (!dq.isEmpty() && nums[dq.peekFirst()] >= nums[i]) {
+                dq.addLast(i);
+            }
+             if (dq.isEmpty()) dq.addFirst(i);
+            int max=dq.getFirst();
+            if(i>=k-1) {
+                numk[index]=nums[max];
+                index++;
+            } 
+
+        }
+        return numk;
+    }
+}
+
+时间复杂度O（n*n）
+空间复杂O（n）

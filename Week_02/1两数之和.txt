@@ -1,0 +1,19 @@
+﻿class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> map =new HashMap<Integer,Integer>();
+        for(int i =0 ; i<nums.length ; i++){
+            int k= target - nums[i];
+            if(map.get(k) != null) {
+                int[] out={i,map.get(k)};
+                return out;
+            }
+            map.put(nums[i],i);
+        }
+        return null;
+    }
+}
+
+
+时间复杂度O（n）
+空间复杂O（n）
+
