@@ -1,0 +1,43 @@
+class Solution {
+    //分治的办法做
+    List<List<Integer>> listList=new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        int len = nums.length;
+        //特殊情况
+        if(len == 0) return listList;
+        boolean[] bools=new boolean[len];
+        //采用递归：先创建一个一样大小的bool数组，用来标明nums对应的元素是否被使用过。
+        per(nums,bools,0 , new ArrayList<Integer>());
+        return listList;
+    }
+
+
+        //按照递归模板直接写出代码
+    void per(int[] nums,boolean[] bools,int count , List<Integer> list){
+    //终止条件
+        if(count >= nums.length) {
+            listList.add( new ArrayList<Integer>(list));
+            return ;
+        }
+        //处理当前层的事情
+        for(int i=0;i<nums.length; i++){
+            if(!bools[i]){
+                list.add(nums[i]);
+                bools[i]=true;
+                //进入下一层
+                per( nums, bools,count+1 , new ArrayList<Integer>(list));
+                从下一层回来,将回来的痕迹进行清除
+                bools[i]=false;
+                list.remove(list.size()-1);
+            }
+        }
+        // 返回上一层
+        return;
+    }
+}
+
+
+时间复杂度O（n*n*n）
+空间复杂O（n*n*n）
+
+

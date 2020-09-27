@@ -1,0 +1,33 @@
+class Solution {
+    List<List<Integer>> paths = new LinkedList<>();     // 总路径
+    List<Integer> path = new LinkedList<>();            // 某条路径
+    public List<List<Integer>> combine(int n, int k) {
+        backtrack(1, n, k);
+        return paths;
+    }
+
+    public void backtrack(int index, int n, int k) {
+        int size = path.size();
+        //特殊情况
+        if (k - size > n - index + 1) {
+            return;
+        }
+         //终止条件
+        if (size == k) {
+            paths.add(new LinkedList(path));
+            return;
+        }
+
+        //处理当前层的事情
+        for (int i = index; i <= n; i++) {
+            path.add(i);
+            //进入下一层
+            backtrack(i + 1, n, k);
+            从下一层回来,将回来的痕迹进行清除
+            path.remove(path.size() - 1);
+        }
+    }
+}
+
+时间复杂度O（n*n*n）
+空间复杂O（n）
