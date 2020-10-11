@@ -1,0 +1,24 @@
+﻿class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m=matrix.length;
+        if (m==0) return false;
+        int n=matrix[0].length;
+        //二分查找
+        int left=0;
+        int ringht=m*n-1;
+        //中间值,零时存放值
+        int z,l;
+        while(left<=ringht){
+            //计算中间位置
+            z=(left + ringht)/2;
+            l=matrix[z/n][z%n];
+            if(l==target){
+                return true;
+            }else{
+                if(l>target) ringht=z-1;
+                if(l<target) left=z+1;
+            }
+        }
+        return false;
+    }
+}

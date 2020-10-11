@@ -1,0 +1,11 @@
+﻿class Solution {
+    public int maxSubArray(int[] nums) {
+        int count=0; 
+        int maxCount=nums[0];
+        for(int num : nums){
+            count=Math.max( count + num , num);
+            maxCount=Math.max( count  , maxCount);
+        }
+        return maxCount;
+    }
+}
