@@ -1,0 +1,35 @@
+﻿class Solution {
+    public int findCircleNum(int[][] M) { //用并查集的办法，先建一个数组,初始化数组都为-1，-1表示是根节点
+        int len=M.length;
+        int[] nums=new int[len];
+        Arrays.fill(nums, -1);
+        for(int i=0;i<len;i++) {
+            for (int j = 0; j < M[0].length; j++) {
+                if( M[i][j]==1 && i!=j )  union(nums,i,j);
+            }
+        }
+        //统计nums数组中的-1值，就是统计根节点的数量
+        int count=0;
+        for(int i=0;i<len;i++) {
+            if( nums[i]==-1 ) count++;
+        }
+        return count;
+    }
+    //进行处理，当它两个都是根节点的时候，需要把其中一个-1改成下标
+    void union(int[] nums,int i,int j){
+        //查找i的根节点
+        int xset=find(nums,i);
+        //查找j的根节点
+        int yset=find(nums,j);
+        //如果他们的根节点不一样就，把他们连到一个上面。
+        if(xset != yset) nums[xset]=yset;
+    }
+    //查找根节点
+    int find(int[] nums,int p){
+        //如果它本身是根节点就返回它自己
+        if(nums[p]==-1) return p;
+        //如果它不是根节点就去找它的上面的父节点的根节点
+        return find(nums,nums[p]);
+    }
+
+}

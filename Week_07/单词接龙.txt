@@ -1,0 +1,41 @@
+﻿class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if( wordList == null || wordList.size()==0 ) return 0;
+        //将开始词和结束词,所有的词都放到HashSet<String>中
+        HashSet<String> beginSet=new HashSet<>();
+        HashSet<String> endSet=new HashSet<>();
+        HashSet<String> wordListSet=new HashSet<>(wordList);
+        beginSet.add(beginWord);
+        endSet.add(endWord);
+        if(!wordListSet.contains(endWord)) return 0;
+        return bfs(beginSet,endSet,wordListSet,2);
+    }
+
+    int bfs(HashSet<String> beginSet,HashSet<String> endSet,HashSet<String> wordListSet,int count ){
+        if(beginSet.size()==0) return 0;
+        if( beginSet.size() >  endSet.size() )  return bfs(endSet,beginSet,wordListSet,count );
+        //使用过得就踢掉
+        wordListSet.removeAll(beginSet);
+        HashSet<String> nextSet=new HashSet<>();
+        for(String  begin :beginSet){
+            char[] chars= begin.toCharArray();
+            for( int i=0 ; i < chars.length; i++  ){
+                char c= chars[i];
+                for( char k='a'; k<='z'; k++ ){
+                    if(c==k) continue;
+                    chars[i] = k;
+                    String str=new String(chars);
+                    if( wordListSet.contains(str) ){
+                        if(endSet.contains(str)){
+                            return count;
+                        }else{
+                            nextSet.add(str);
+                        }
+                    }
+                }
+                chars[i]= c;
+            }
+        }
+        return bfs(nextSet,endSet,wordListSet,count+1 );
+    }
+}
