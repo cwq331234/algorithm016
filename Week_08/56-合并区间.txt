@@ -1,0 +1,25 @@
+﻿class Solution {
+    public int[][] merge(int[][] intervals) {
+        //踢掉特殊情况
+        if(intervals==null || intervals.length<=1) return intervals;
+        int len = intervals.length;
+        //对二维数组按照第一个值进行排序
+        Arrays.sort(intervals,(a1,a2)->a1[0]-a2[0]);
+        //创建一个List，把合并好的数组放入其中
+        List<int[]> list = new ArrayList<>();
+        int i=0;
+        list.add(intervals[0]);
+        for(int j=1;j<len;j++){
+            int[] temp=list.get(i);
+            //如果list前一个数组的第二位比intervals的j的第一位大，就把list前一个数组的第二位换成intervals的j的第二位，进入下一个intervals
+            if(temp[1]>=intervals[j][0]){
+                temp[1]=Math.max( temp[1],intervals[j][1]);
+            }else{
+                //如果不是以上情况，说明list前一个数组和intervals的j没有交集，直接往list中加intervals的j；
+                list.add(intervals[j]);
+                i++;
+            }
+        }
+        return list.toArray(new int[list.size()][]);
+    }
+}

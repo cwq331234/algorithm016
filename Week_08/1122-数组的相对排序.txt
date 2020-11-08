@@ -1,0 +1,29 @@
+﻿class Solution {
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        //桶排
+        int[] res=new int[1001];
+        int[] m=new int[arr1.length];
+        //计算arr1中每个数的数量；
+        for(int arr:arr1){
+            res[arr]++;
+        }
+        //将a2中有的数加到m数组中
+        int i=0;
+        for(int a2:arr2){
+            while(res[a2]>0){
+                m[i]=a2;
+                i++;
+                res[a2]--;
+            }
+        }
+        //将a1中没有的数加到m数组中
+         for(int j=0;j<res.length;j++){
+            while(res[j]>0){
+                m[i]=j;
+                i++;
+                res[j]--;
+            }
+        }
+        return m;
+    }
+}
