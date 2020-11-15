@@ -1,0 +1,23 @@
+﻿class Solution {
+    public int longestValidParentheses(String s) {
+        //动态规划
+        //如果s[i]='(' dp[i]=0
+        // 如果s[i]=')'且s[i-1]='(' dp[i]=dp[i-2]+2
+        // 如果s[i]=')'且s[i-1]=')'就需要往前i-dp[i-1]-1步看是否是'(' 
+        int count=0;
+        int[] dp=new int[s.length()];
+        for(int i=1;i<s.length();i++){
+            if(s.charAt(i)==')'){
+                if(s.charAt(i-1)=='('){
+                    dp[i]=( i-2>=0 ? dp[i-2] : 0 )+2;
+                }else if(i>dp[i-1] && s.charAt(i - dp[i - 1] - 1) == '(' ){
+                    int w=0;
+                    if(i-dp[i-1] >=2) w=dp[i - dp[i - 1] - 2];
+                    dp[i]=dp[i-1] + w+2;
+                }
+            }
+            count=Math.max(count,dp[i]);
+        }
+        return count;
+    }
+}

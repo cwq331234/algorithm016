@@ -1,0 +1,20 @@
+﻿class Solution {
+    public int lengthOfLIS(int[] nums) {
+        //动态规划、dp[i]=max(dp[j])+1,其中0≤j<i且num[j]<num[i]
+        int len = nums.length;
+        if(len<2) return len;
+        int[] dp=new int[len];
+        int count=1;
+        dp[0]=1;
+        for(int i=1;i<len ;i++){  
+            dp[i]=1;
+            for(int j=0;j<i;j++){
+                if(nums[i]>nums[j]){
+                    dp[i]=Math.max(dp[i],dp[j]+1);
+                }
+            }
+            count=Math.max(count,dp[i]);
+        }
+        return count;
+    }
+}
